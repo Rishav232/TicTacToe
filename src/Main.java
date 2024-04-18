@@ -23,7 +23,6 @@ public class Main {
 
         players.add(new Player("Rishav", new Symbol('x'), PlayerType.HUMAN));
         players.add(new Bot("Ai", new Symbol('o'), PlayerType.BOT, BotDifficultyLevel.EASY));
-        // players.add(new Player("Gaurav", new Symbol('#'), PlayerType.HUMAN));
 
 
         List<WinningStrategy>winningStrategies=List.of(

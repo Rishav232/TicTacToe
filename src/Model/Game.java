@@ -97,16 +97,16 @@ public class Game {
 
         return true;
     }
-    public void makeMove(Game game) {
+    public void makeMove() {
 
-        Player p1 = game.getPlayers().get(nextPlayerId);
+        Player p1 = players.get(nextPlayerId);
 
-        Move makeMove=p1.playerMove(game);
+        Move makeMove=p1.playerMove(this);
 
         if(!validation(makeMove))
         {
             System.out.println("Wrong move , please retry");
-            makeMove(game);
+            this.makeMove();
             return;
             
         }
@@ -120,51 +120,49 @@ public class Game {
         
         Move finaMove=new Move(p1, c);
         moves.add(finaMove);
-        if(checkWinner(game, finaMove))
+        if(checkWinner(this, finaMove))
         {
-            game.setGameState(GameState.ENDED);
-            game.setWinner(p1);
+            this.setGameState(GameState.ENDED);
+            this.setWinner(p1);
         }
         else if(moves.size()==dimensions*dimensions)
         {
-            game.setGameState(GameState.DRAW);
+            this.setGameState(GameState.DRAW);
         }
         
     }
-    public boolean undoCheck(Game game)
+    public boolean undoCheck()
     {
-        int nextId = game.getNextPlayerId();
-        Player p1 = game.getPlayers().get(nextId);
+        Player p1 = players.get(nextPlayerId);
 
-        if(!p1.getPlayerType().equals(PlayerType.HUMAN))
+        if(moves.size()==0||!p1.getPlayerType().equals(PlayerType.HUMAN))
         return false;
 
         int i;
-        for (i = game.getMoves().size() - 1; i >= 0; i--) {
-            if (game.getMoves().get(i).getPlayer().getSymbol().getaChar() == p1.getSymbol().getaChar())
+        for (i = moves.size() - 1; i >= 0; i--) {
+            if (moves.get(i).getPlayer().getSymbol().getaChar() == p1.getSymbol().getaChar())
                 return true;
         }
+        System.out.println("You have no more moves to undo , Please make atleast 1 move");
         return false;
     }
-    public void undo(Game game) {
-
-        int nextId = game.getNextPlayerId();
-        Player p1 = game.getPlayers().get(nextId);
+    public void undo() {
+        Player p1 = players.get(nextPlayerId);
 
         int i;
-        for (i = game.getMoves().size() - 1; i >= 0; i--) {
-            if (game.getMoves().get(i).getPlayer().getSymbol().getaChar() == p1.getSymbol().getaChar())
+        for (i = moves.size() - 1; i >= 0; i--) {
+            if (moves.get(i).getPlayer().getSymbol().getaChar() == p1.getSymbol().getaChar())
                 break;
         }
 
-        Move move = game.getMoves().get(i);
+        Move move = moves.get(i);
 
-        game.getMoves().remove(i);
+        moves.remove(i);
 
         Cell c = move.getCell();
-        for(WinningStrategy winningStrategy:game.getWinningStrategy())
+        for(WinningStrategy winningStrategyobj:winningStrategy)
         {
-            winningStrategy.decrementCount(game.getBoard(), c);
+            winningStrategyobj.decrementCount(board, c);
         }
         c.setPlayer(null);
         c.setCellState(CellState.EMPTY);

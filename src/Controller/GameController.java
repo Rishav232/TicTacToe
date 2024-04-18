@@ -17,15 +17,15 @@ public class GameController {
 
     public void undo(Game game) {
 
-        game.undo(game);
+        game.undo();
     }
 
     public void makeMove(Game game) {
 
-        game.makeMove(game);
+        game.makeMove();
     }
     public boolean undoCheck(Game game)
     {
-        return game.undoCheck(game);
+        return game.undoCheck();
     }
 }
