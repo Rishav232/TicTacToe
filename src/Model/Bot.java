@@ -13,22 +13,6 @@ public class Bot extends Player{
         this.botDifficultyLevel=botDifficultyLevel;
         this.botPlayingDifficulty=BotDifficultyFactory.getDifficulty(botDifficultyLevel);
     }
-
-    public BotDifficultyLevel getBotDifficultyLevel() {
-        return botDifficultyLevel;
-    }
-
-    public void setBotDifficultyLevel(BotDifficultyLevel botDifficultyLevel) {
-        this.botDifficultyLevel = botDifficultyLevel;
-    }
-
-    public BotPlayingDifficulty getBotPlayingDifficulty() {
-        return botPlayingDifficulty;
-    }
-
-    public void setBotPlayingDifficulty(BotPlayingDifficulty botPlayingDifficulty) {
-        this.botPlayingDifficulty = botPlayingDifficulty;
-    }
     public Move playerMove(Game game)
     {
         return botPlayingDifficulty.playinStrategy(game);

@@ -38,9 +38,6 @@ public class Game {
     public int getDimensions() {
         return dimensions;
     }
-    public void setDimensions(int dimensions) {
-        this.dimensions = dimensions;
-    }
     public Board getBoard() {
         return board;
     }
@@ -49,15 +46,6 @@ public class Game {
     }
     public List<Player> getPlayers() {
         return players;
-    }
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
-    public List<Move> getMoves() {
-        return moves;
-    }
-    public void setMoves(List<Move> moves) {
-        this.moves = moves;
     }
     public GameState getGameState() {
         return gameState;
@@ -68,12 +56,7 @@ public class Game {
     public int getNextPlayerId() {
         return nextPlayerId;
     }
-    public void setNextPlayerId(int nextPlayerId) {
-        this.nextPlayerId = nextPlayerId;
-    }
-    public List<WinningStrategy> getWinningStrategy() {
-        return winningStrategy;
-    }
+    
     public Player getWinner() {
         return winner;
     }
@@ -122,12 +105,12 @@ public class Game {
         moves.add(finaMove);
         if(checkWinner(this, finaMove))
         {
-            this.setGameState(GameState.ENDED);
-            this.setWinner(p1);
+            gameState=GameState.ENDED;
+            winner=p1;
         }
         else if(moves.size()==dimensions*dimensions)
         {
-            this.setGameState(GameState.DRAW);
+            gameState=GameState.DRAW;
         }
         
     }
@@ -170,7 +153,7 @@ public class Game {
 
     public boolean checkWinner(Game game,Move finaMove)
     {
-        for (WinningStrategy obj : game.getWinningStrategy()) {
+        for (WinningStrategy obj : winningStrategy) {
             if (obj.strategy(board, finaMove)) {
                 return true;
             }
