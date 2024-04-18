@@ -143,7 +143,7 @@ public class Game {
             if (moves.get(i).getPlayer().getSymbol().getaChar() == p1.getSymbol().getaChar())
                 return true;
         }
-        System.out.println("You have no more moves to undo , Please make atleast 1 move");
+        System.out.println("You have no moves to undo , Please make atleast 1 move");
         return false;
     }
     public void undo() {
